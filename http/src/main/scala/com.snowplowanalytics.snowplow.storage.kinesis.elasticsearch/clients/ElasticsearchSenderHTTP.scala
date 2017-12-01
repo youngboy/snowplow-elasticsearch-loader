@@ -22,6 +22,12 @@ import scala.util.{Failure => SFailure, Success => SSuccess}
 import com.sksamuel.elastic4s.ElasticsearchClientUri
 import com.sksamuel.elastic4s.http.{HttpClient, NoOpHttpClientConfigCallback}
 import com.sksamuel.elastic4s.http.ElasticDsl._
+import com.google.common.base.Charsets
+import com.google.common.io.BaseEncoding
+import org.apache.http.message.BasicHeader
+import org.apache.http.{Header, HttpHost}
+import org.elasticsearch.client.RestClient
+
 
 // Scalaz
 import scalaz._
@@ -56,8 +62,15 @@ class ElasticsearchSenderHTTP(
   private val httpClientConfigCallback =
     if (awsSigning) new SignedHttpClientConfigCallback(credentialsProvider, region)
     else NoOpHttpClientConfigCallback
-  private val client = HttpClient(uri,
-    httpClientConfigCallback = httpClientConfigCallback)
+
+  private val user:String = "elastic"
+  private val pass:String = "changeme"
+  private val userpass = BaseEncoding.base64().encode(s"$user:$pass".getBytes(Charsets.UTF_8))
+  private val formedHost = new HttpHost(endpoint, port)
+  private val headers:Array[Header] = Array(new BasicHeader("Authorization", s"Basic $userpass"))
+
+  private val restClient = RestClient.builder(formedHost).setDefaultHeaders(headers).build() //.setDefaultHeaders(headers)
+  private val client = HttpClient.fromRestClient(restClient)
 
   implicit val strategy = Strategy.DefaultExecutorService
 

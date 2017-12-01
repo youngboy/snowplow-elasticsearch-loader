@@ -64,7 +64,10 @@ lazy val http = project
   .settings(allSettings)
   .settings(libraryDependencies ++= Seq(
     Dependencies.Libraries.elastic4sHttp,
-    Dependencies.Libraries.elastic4sTest
+    Dependencies.Libraries.elastic4sTest,
+    Dependencies.Libraries.elasticsearch,
+    Dependencies.Libraries.google,
+    Dependencies.Libraries.apache
   ))
   .dependsOn(core)
 

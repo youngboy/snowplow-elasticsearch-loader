@@ -21,8 +21,10 @@ object Dependencies {
     val kinesisClient    = "1.7.5"
     val kinesisConnector = "1.3.0"
     val validator        = "2.2.6"
-    val elasticsearch    = "2.4.5"
+    val elasticsearch    = "5.4.1"
     val nsqClient        = "1.1.0-rc1"
+    val google           = "19.0"
+    val apache           = "4.3.6"
     // Scala
     val scopt            = "3.6.0"
     val scalaz7          = "7.2.14"
@@ -44,6 +46,8 @@ object Dependencies {
     val kinesisConnector = "com.amazonaws"           %  "amazon-kinesis-connectors"    % V.kinesisConnector
     val validator        = "com.github.fge"          %  "json-schema-validator"        % V.validator
     val elasticsearch    = "org.elasticsearch"       %  "elasticsearch"                % V.elasticsearch
+    val google           = "com.google.guava"        %  "guava"                        % V.google
+    val apache           = "org.apache.httpcomponents"  %  "httpclient"                % V.apache
     val nsqClient        = "com.snowplowanalytics"   %  "nsq-java-client_2.10"         % V.nsqClient
     // Scala
     val scopt            = "com.github.scopt"        %% "scopt"                        % V.scopt
