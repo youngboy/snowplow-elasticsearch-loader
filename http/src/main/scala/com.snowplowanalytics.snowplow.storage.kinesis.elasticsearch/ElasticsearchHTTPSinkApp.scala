@@ -31,12 +31,14 @@ object ElasticsearchHTTPSinkApp extends App with ElasticsearchSinkApp {
   val region = config.elasticsearch.aws.region
   val signing = config.elasticsearch.aws.signing
   val ssl = config.elasticsearch.client.ssl
+  val username = config.elasticsearch.client.username
+  val password = config.elasticsearch.client.password
   val maxConnectionTime = config.elasticsearch.client.maxTimeout
   val credentials = CredentialsLookup.getCredentialsProvider(config.aws.accessKey, config.aws.secretKey)
   val tracker = config.monitoring.map(e => SnowplowTracking.initializeTracker(e.snowplow))
 
   override lazy val elasticsearchSender: ElasticsearchSender =
-    new ElasticsearchSenderHTTP(esEndpoint, esPort, credentials, region, ssl, signing, tracker, maxConnectionTime)
+    new ElasticsearchSenderHTTP(username, password, esEndpoint, esPort, credentials, region, ssl, signing, tracker, maxConnectionTime)
 
   run(config)
 }

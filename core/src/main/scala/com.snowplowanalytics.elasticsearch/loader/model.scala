@@ -69,7 +69,9 @@ package model {
     endpoint: String,
     port: Int,
     maxTimeout: Long,
-    ssl: Boolean
+    ssl: Boolean,
+    username: String,
+    password: String
   )
   case class ESAWSConfig(signing: Boolean, region: String)
   case class ESClusterConfig(name: String, index: String, clusterType: String)

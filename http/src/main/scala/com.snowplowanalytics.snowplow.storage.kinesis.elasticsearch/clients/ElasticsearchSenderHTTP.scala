@@ -43,6 +43,8 @@ import org.slf4j.LoggerFactory
 import com.snowplowanalytics.snowplow.scalatracker.Tracker
 
 class ElasticsearchSenderHTTP(
+  username: String,
+  password: String,
   endpoint: String,
   port: Int,
   credentialsProvider: AWSCredentialsProvider,
@@ -63,9 +65,7 @@ class ElasticsearchSenderHTTP(
     if (awsSigning) new SignedHttpClientConfigCallback(credentialsProvider, region)
     else NoOpHttpClientConfigCallback
 
-  private val user:String = "elastic"
-  private val pass:String = "changeme"
-  private val userpass = BaseEncoding.base64().encode(s"$user:$pass".getBytes(Charsets.UTF_8))
+  private val userpass = BaseEncoding.base64().encode(s"$username:$password".getBytes(Charsets.UTF_8))
   private val formedHost = new HttpHost(endpoint, port)
   private val headers:Array[Header] = Array(new BasicHeader("Authorization", s"Basic $userpass"))
 
